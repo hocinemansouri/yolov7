@@ -315,8 +315,10 @@ class LoadStreams:  # multiple IP or RTSP cameras
                 success, im = cap.retrieve()
                 self.imgs[index] = im if success else self.imgs[index] * 0
                 n = 0
-            time.sleep(1 / self.fps)  # wait time
-
+            if self.fps > 0 :
+                time.sleep(1 / self.fps)  # wait time
+            else:
+                time.sleep(1 / 30) # set a default fps to 30 to avoid ZeroDivisionError
     def __iter__(self):
         self.count = -1
         return self
